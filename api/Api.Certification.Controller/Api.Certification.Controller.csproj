@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Api.Certificate.Infra\Api.Certificate.Infra.csproj" />
+	  <ProjectReference Include="..\Api.Certificate.Infra\Api.Certification.Infra.csproj" />
 	</ItemGroup>
 	
 </Project>

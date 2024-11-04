@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 
-namespace Api.Certificate.Infra.IoC
+namespace Api.Certification.Infra.IoC
 {
     public static class IoC
     {
