@@ -1,4 +1,4 @@
-﻿using Api.Certificate.Infra.IoC;
+﻿using Api.Certification.Infra.IoC;
 public class Program
 {
     public static void Main(string[] args)
@@ -9,7 +9,7 @@ public class Program
 
         builder.Services.AddControllers();
 
-        builder.Services.ConfigureServices();
+        builder.Services.RegisterServices(configuration);
 
         var app = builder.Build();
 

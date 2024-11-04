@@ -1,4 +1,5 @@
-﻿using Api.Certification.AppDomain.Handler.request;
+﻿
+using Api.Certification.AppDomain.Commands.request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

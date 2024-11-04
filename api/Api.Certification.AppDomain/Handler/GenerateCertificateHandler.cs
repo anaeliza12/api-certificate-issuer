@@ -7,18 +7,17 @@ namespace Api.Certification.AppDomain.Handler
     public class GenerateCertificateHandler : IRequestHandler<GenerateCertificateRequest, GenerateCertificateResponse>
     {
 
-        private readonly IGenerateCertificate _generateService;
+        private readonly IGenerateCertificateService _generateService;
 
-        public GenerateCertificateHandler(IGenerateCertificate generateService)
+        public GenerateCertificateHandler(IGenerateCertificateService generateService)
         {
             _generateService = generateService;
         }
 
         public async Task<GenerateCertificateResponse> Handle(GenerateCertificateRequest request, CancellationToken cancellationToken)
         {
-            var response = new GenerateCertificateResponse();
 
-            response = await _generateService.GenerateCertificateAsync();
+            var response = await _generateService.GenerateCertificateAsync(request);
             throw new NotImplementedException();
         }
     }

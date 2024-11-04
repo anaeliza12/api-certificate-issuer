@@ -2,7 +2,7 @@
 
 namespace Api.Certification.AppDomain.Interfaces
 {
-    public interface IGenerateCertificate
+    public interface IGenerateCertificateService
     {
         Task<string> GenerateCertificateAsync(GenerateCertificateRequest request);
     }

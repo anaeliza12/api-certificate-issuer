@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Api.Certification.Infra.Services
 {
-    public class GenerateCertificateService : IGenerateCertificate
+    public class GenerateCertificateService : IGenerateCertificateService
     {
         public async Task<string> GenerateCertificateAsync(GenerateCertificateRequest request)
         {
