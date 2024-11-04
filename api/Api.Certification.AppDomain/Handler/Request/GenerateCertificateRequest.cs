@@ -1,14 +1,10 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Api.Certification.AppDomain.Model;
+using MediatR;
 
 namespace Api.Certification.AppDomain.Handler.request
 {
     public class GenerateCertificateRequest : IRequest<GenerateCertificateResponse>
     {
-        public AlunoModel AlunoModel { get; set; }
+        public StudentModel StudentModel { get; set; }     
     }
 }

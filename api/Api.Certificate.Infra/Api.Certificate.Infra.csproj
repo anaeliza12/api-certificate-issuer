@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
   </ItemGroup>
+	
+	<ItemGroup>
+      <ProjectReference Include="..\Api.Certification.AppDomain\Api.Certification.AppDomain.csproj" />
+	</ItemGroup>
 
 </Project>
