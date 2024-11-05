@@ -1,24 +1,19 @@
 ﻿using Api.Certification.Infra.IoC;
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
 
-        var configuration = builder.Configuration;
+var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
+var configuration = builder.Configuration;
 
-        builder.Services.RegisterServices(configuration);
+builder.Services.AddControllers();
 
-        var app = builder.Build();
+builder.Services.RegisterServices(configuration);
 
-        app.UseRouting();
+var app = builder.Build();
 
-        app.UseAuthorization();
+app.UseRouting();
 
-        app.MapControllers();
+app.UseAuthorization();
 
-        app.Run();
-    }
-}
+app.MapControllers();
+
+app.Run();
