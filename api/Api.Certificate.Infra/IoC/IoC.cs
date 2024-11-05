@@ -19,10 +19,9 @@ namespace Api.Certification.Infra.IoC
 
             #region SERVICES
             services.AddTransient<IGenerateCertificateService, GenerateCertificateService>();
-            services.AddHttpClient();
             #endregion
 
-            #region Mediator config
+            #region MEDIATOR CONFIG
             var assembly = System.AppDomain.CurrentDomain.Load("Api.Certification.AppDomain");
             services.AddMediatR(ctg => ctg.RegisterServicesFromAssemblies(assembly));
 

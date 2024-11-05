@@ -4,15 +4,9 @@ using Api.Certification.AppDomain.Interfaces;
 
 namespace Api.Certification.AppDomain.Handler
 {
-    public class GenerateCertificateHandler : IRequestHandler<GenerateCertificateRequest, GenerateCertificateResponse>
+    public class GenerateCertificateHandler(IGenerateCertificateService generateService) : IRequestHandler<GenerateCertificateRequest, GenerateCertificateResponse>
     {
-
-        private readonly IGenerateCertificateService _generateService;
-
-        public GenerateCertificateHandler(IGenerateCertificateService generateService)
-        {
-            _generateService = generateService;
-        }
+        private readonly IGenerateCertificateService _generateService = generateService;
 
         public async Task<GenerateCertificateResponse> Handle(GenerateCertificateRequest request, CancellationToken cancellationToken)
         {

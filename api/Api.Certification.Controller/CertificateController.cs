@@ -1,5 +1,4 @@
-﻿
-using Api.Certification.AppDomain.Commands.request;
+﻿using Api.Certification.AppDomain.Commands.request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +11,7 @@ namespace Api.Certification.Controller
         public readonly IMediator _mediator = mediator;
 
         [HttpPost("v1/generate")]
+        [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
         public async Task<IActionResult> GenerateCertificate( GenerateCertificateRequest request)
         {
             var response = await _mediator.Send(request);

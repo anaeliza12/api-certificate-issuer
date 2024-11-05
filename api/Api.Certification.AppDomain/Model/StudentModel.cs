@@ -14,25 +14,5 @@
         public string WorkLoad { get; set; }
         public string Sign { get; set; }
         public string Role { get; set; }
-
-        public StudentModel() { }
-
-        public StudentModel(long id, string name, string nationality, string state,
-            string bithDate, string rG, string conclusionDate, string issueDate, string course, string workLoad, string sign, string role)
-        {
-            Id = id;
-            Name = name;
-            Nationality = nationality;
-            State = state;
-            BirthDate = bithDate;
-            RG = rG;
-            ConclusionDate = conclusionDate;
-            IssueDate = issueDate;
-            Course = course;
-            WorkLoad = workLoad;
-            Sign = sign;
-            Role = role;
-        }
-
     }
 }
