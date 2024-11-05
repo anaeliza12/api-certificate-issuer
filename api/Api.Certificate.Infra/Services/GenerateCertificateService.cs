@@ -1,38 +1,41 @@
 ﻿using Api.Certification.AppDomain.Commands.request;
 using Api.Certification.AppDomain.Interfaces;
-using MediatR;
+using Api.Certification.Infra.ApiSettings.AppSettings;
+using SelectPdf;
+using System.Net.Http;
 
 namespace Api.Certification.Infra.Services
 {
-    public class GenerateCertificateService : IGenerateCertificateService
+    public class GenerateCertificateService(TemplateConfig templateConfig, HttpClient httpClient) : IGenerateCertificateService
     {
-        public async Task<string> GenerateCertificateAsync(GenerateCertificateRequest request)
+
+        private readonly TemplateConfig _templateConfig = templateConfig;
+        private readonly HttpClient _httpClient = httpClient;
+
+        public async Task<byte[]> GenerateCertificateAsync(GenerateCertificateRequest request)
         {
-            var template = await File.ReadAllTextAsync("caminho/para/o/template.html");
+            var template = await File.ReadAllTextAsync(_templateConfig.TemplatePath);
 
             var htmlContent = template
-                .Replace("{{Nome}}", request.StudentModel.Name)
-                .Replace("{{Curso}}", request.StudentModel.Course)
-                .Replace("{{DataConclusao}}", request.StudentModel.ConclusionDate);
+                .Replace("[[nome]]", request.StudentModel.Name)
+                .Replace("[[curso]]", request.StudentModel.Course)
+                .Replace("[[nacionalidade]]", request.StudentModel.Nationality);
 
-            var pdfBase64 = ConverterHtmlParaPdf(htmlContent);
-
-            return pdfBase64;
+            var pdfBytes = GeneratePdf(htmlContent);
+            return pdfBytes;
         }
-        private string ConverterHtmlParaPdf(string html)
+        private byte[] GeneratePdf(string htmlContent)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                var converter = new BasicConverter(new PdfTools());
-                var doc = new HtmlToPdfDocument
-                {
-                    GlobalSettings = { ColorMode = ColorMode.Color, Orientation = Orientation.Portrait, PaperSize = PaperKind.A4 }
-                };
-                doc.ObjectSettings.Add(new ObjectSettings { HtmlContent = html });
-                converter.Convert(doc);
+            HtmlToPdf converter = new HtmlToPdf();
 
-                return Convert.ToBase64String(memoryStream.ToArray());
-            }
+            converter.Options.PdfPageSize = PdfPageSize.A4;
+
+            PdfDocument doc = converter.ConvertHtmlString(htmlContent);
+
+            byte[] pdfFile = doc.Save();
+            doc.Close();
+
+            return pdfFile;
         }
     }
 }

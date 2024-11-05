@@ -3,6 +3,7 @@ using Api.Certification.Infra.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.Certification.AppDomain.Interfaces;
+using Microsoft.Extensions.Options;
 
 
 namespace Api.Certification.Infra.IoC
@@ -13,10 +14,12 @@ namespace Api.Certification.Infra.IoC
         {
             #region APPSETTINGS
             services.Configure<TemplateConfig>(configuration.GetSection("TemplateConfig"));
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<TemplateConfig>>().Value);
             #endregion
 
             #region SERVICES
             services.AddTransient<IGenerateCertificateService, GenerateCertificateService>();
+            services.AddHttpClient();
             #endregion
 
             #region Mediator config

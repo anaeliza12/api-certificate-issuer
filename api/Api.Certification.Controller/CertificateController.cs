@@ -7,21 +7,16 @@ namespace Api.Certification.Controller
 {
     [ApiController]
     [Route("api/[controller]")]
-
-
-    public class CertificateController: ControllerBase
+    public class CertificateController(IMediator mediator) : ControllerBase
     {
-        public readonly IMediator _mediator;
-
-        public CertificateController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public readonly IMediator _mediator = mediator;
 
         [HttpPost("v1/generate")]
-        public async Task<IActionResult> GenerateCertificate([FromBody] GenerateCertificateRequest request)
+        public async Task<IActionResult> GenerateCertificate( GenerateCertificateRequest request)
         {
-            return Ok("oi");
+            var response = await _mediator.Send(request);
+
+            return File(response.Certificate, "application/pdf", "certificado.pdf");
         }
     }
 }

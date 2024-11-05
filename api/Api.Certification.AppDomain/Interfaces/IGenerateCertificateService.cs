@@ -4,6 +4,6 @@ namespace Api.Certification.AppDomain.Interfaces
 {
     public interface IGenerateCertificateService
     {
-        Task<string> GenerateCertificateAsync(GenerateCertificateRequest request);
+        Task<byte[]> GenerateCertificateAsync(GenerateCertificateRequest request);
     }
 }
