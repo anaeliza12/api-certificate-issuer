@@ -1,14 +1,14 @@
-﻿using Api.Certification.Infra.ApiSettings.AppSettings;
-using Api.Certification.Infra.Services;
+﻿using Api.Certification.Infra.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.Certification.AppDomain.Interfaces;
 using Microsoft.Extensions.Options;
 using Api.Certification.Infra.ApiSettings.Repositories.Context;
 using Microsoft.EntityFrameworkCore;
+using Api.Certification.AppDomain.Utils.AppSettings;
 
 
-namespace Api.Certification.Infra.IoC
+namespace Api.Certification.Infra.ApiSettings.IoC
 {
     public static class IoC
     {

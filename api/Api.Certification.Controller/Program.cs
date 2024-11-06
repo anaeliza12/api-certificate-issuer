@@ -1,4 +1,4 @@
-﻿using Api.Certification.Infra.IoC;
+﻿using Api.Certification.Infra.ApiSettings.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -12,12 +12,12 @@ namespace Api.Certification.Controller
 
         [HttpPost("v1/generate")]
         [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GenerateCertificate( GenerateCertificateRequest request)
+        public async Task<IActionResult> GenerateCertificate(GenerateCertificateRequest request)
         {
             var response = await _mediator.Send(request);
 
             return File(response.Certificate, "application/pdf", "certificado.pdf");
         }
-        
+
     }
 }

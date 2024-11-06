@@ -1,7 +1,7 @@
 ﻿using Api.Certification.AppDomain.Commands.request;
 using Api.Certification.AppDomain.Interfaces;
 using Api.Certification.AppDomain.Model;
-using Api.Certification.Infra.ApiSettings.AppSettings;
+using Api.Certification.AppDomain.Utils.AppSettings;
 using Api.Certification.Infra.ApiSettings.Repositories.Context;
 using SelectPdf;
 
@@ -9,17 +9,15 @@ namespace Api.Certification.Infra.Services
 {
     public class GenerateCertificateService : IGenerateCertificateService
     {
-        private readonly TemplateConfig _templateConfig;
         private readonly MySQLContext _Dbcontext;
-        public GenerateCertificateService(TemplateConfig templateConfig, MySQLContext Dbcontext)
+        public GenerateCertificateService(MySQLContext Dbcontext)
         {
-            _templateConfig = templateConfig;
             _Dbcontext = Dbcontext;
         }
 
         public async Task<byte[]> GenerateCertificateAsync(GenerateCertificateRequest request)
         {
-            var template = await File.ReadAllTextAsync(_templateConfig.TemplatePath);
+            var template = await File.ReadAllTextAsync(TemplateConfig.TemplatePath);
 
             var htmlContent = template
                 .Replace("[[nome]]", request.StudentModel.Name)
@@ -37,15 +35,34 @@ namespace Api.Certification.Infra.Services
             var pdfBytes = GeneratePdf(htmlContent);
             return pdfBytes;
         }
-        public async Task<StudentModel> TesteBanco()
-        {
-            var student = _Dbcontext.Student.Find(1);
 
-            return student;
+        public async Task<PdfFileModel> SaveCertificateAsync(PdfFileModel PdfFile)
+        {
+            var pdfSaved = _Dbcontext.PdfFile.Add(PdfFile);
+            var rowsAffected = await _Dbcontext.SaveChangesAsync();
+
+            if (rowsAffected < 1)
+            {
+                throw new Exception("It was not possible to save: " + PdfFile.FileName + " in database");
+            }
+
+            return pdfSaved.Entity;
+        }
+        public async Task<StudentModel> SaveStudentAsync(StudentModel student)
+        {
+            var studentSaved =  _Dbcontext.Student.Add(student);
+            var rowsAffected = await _Dbcontext.SaveChangesAsync();
+
+            if(rowsAffected < 1)
+            {
+                throw new Exception("It was not possible to save: " + student.Name + " in database");
+            }
+
+            return studentSaved.Entity;
         }
         private byte[] GeneratePdf(string htmlContent)
         {
-            string htmlEnginePath = _templateConfig.SelectHtmlPath;
+            string htmlEnginePath = TemplateConfig.SelectHtmlPath;
 
             GlobalProperties.HtmlEngineFullPath = htmlEnginePath;
 
