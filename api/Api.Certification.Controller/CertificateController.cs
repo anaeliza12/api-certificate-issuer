@@ -18,5 +18,6 @@ namespace Api.Certification.Controller
 
             return File(response.Certificate, "application/pdf", "certificado.pdf");
         }
+        
     }
 }

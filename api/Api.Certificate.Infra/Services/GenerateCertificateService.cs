@@ -1,13 +1,21 @@
 ﻿using Api.Certification.AppDomain.Commands.request;
 using Api.Certification.AppDomain.Interfaces;
+using Api.Certification.AppDomain.Model;
 using Api.Certification.Infra.ApiSettings.AppSettings;
+using Api.Certification.Infra.ApiSettings.Repositories.Context;
 using SelectPdf;
 
 namespace Api.Certification.Infra.Services
 {
-    public class GenerateCertificateService(TemplateConfig templateConfig) : IGenerateCertificateService
+    public class GenerateCertificateService : IGenerateCertificateService
     {
-        private readonly TemplateConfig _templateConfig = templateConfig;
+        private readonly TemplateConfig _templateConfig;
+        private readonly MySQLContext _Dbcontext;
+        public GenerateCertificateService(TemplateConfig templateConfig, MySQLContext Dbcontext)
+        {
+            _templateConfig = templateConfig;
+            _Dbcontext = Dbcontext;
+        }
 
         public async Task<byte[]> GenerateCertificateAsync(GenerateCertificateRequest request)
         {
@@ -28,6 +36,12 @@ namespace Api.Certification.Infra.Services
 
             var pdfBytes = GeneratePdf(htmlContent);
             return pdfBytes;
+        }
+        public async Task<StudentModel> TesteBanco()
+        {
+            var student = _Dbcontext.Student.Find(1);
+
+            return student;
         }
         private byte[] GeneratePdf(string htmlContent)
         {

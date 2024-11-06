@@ -1,8 +1,13 @@
-﻿namespace Api.Certification.AppDomain.Model
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Api.Certification.AppDomain.Model
 {
+    [Table("Students")]
     public class StudentModel
     {
-        public long Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Nationality { get; set; }
         public string State { get; set; }

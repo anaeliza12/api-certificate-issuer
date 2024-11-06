@@ -11,7 +11,7 @@ namespace Api.Certification.AppDomain.Handler
         public async Task<GenerateCertificateResponse> Handle(GenerateCertificateRequest request, CancellationToken cancellationToken)
         {
             var pdfBytes = await _generateService.GenerateCertificateAsync(request);
-            
+
             var response = new GenerateCertificateResponse()
             {
                 Certificate = pdfBytes

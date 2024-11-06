@@ -1,0 +1,26 @@
+﻿using Api.Certification.AppDomain.Model;
+using Microsoft.EntityFrameworkCore;
+
+namespace Api.Certification.Infra.ApiSettings.Repositories.Context
+{
+    public class MySQLContext(DbContextOptions<MySQLContext> options) : DbContext(options)
+    {
+        public DbSet<StudentModel> Student { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            var connection = "Server=DESKTOP-QIJ7H6I;Port=3306;Database=studentscertificate";
+            options.UseMySql(connection, ServerVersion.AutoDetect(connection));
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<StudentModel>()
+       .ToTable("students");
+
+            modelBuilder.Entity<StudentModel>()
+                .HasKey(s => s.Id);
+        }
+    }
+}

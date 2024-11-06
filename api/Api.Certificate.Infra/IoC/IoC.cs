@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.Certification.AppDomain.Interfaces;
 using Microsoft.Extensions.Options;
+using Api.Certification.Infra.ApiSettings.Repositories.Context;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Api.Certification.Infra.IoC
@@ -19,6 +21,10 @@ namespace Api.Certification.Infra.IoC
 
             #region SERVICES
             services.AddTransient<IGenerateCertificateService, GenerateCertificateService>();
+
+            services.AddDbContext<MySQLContext>(options =>
+          options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
+            ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
             #endregion
 
             #region MEDIATOR CONFIG
